@@ -15,7 +15,6 @@ public class GUI extends Component {
     private final JButton btnNaechsterEintrag;
     private final JButton btnUmlagern;
     private final JButton btnVerschrotten;
-    private final JButton btnBilanz;
     private final JButton btnAuftragBearbeiten, btnAuftragAblehnen;
 
     private final Label lblBelohnung;
@@ -67,7 +66,6 @@ public class GUI extends Component {
         btnNaechsterEintrag = new JButton("Nächster Eintrag");
         btnUmlagern = new JButton("Umlagern");
         btnVerschrotten = new JButton("Verschrotten");
-        btnBilanz = new JButton("Bilanz");
         btnAuftragBearbeiten = new JButton("Auftrag bearbeiten");
         btnAuftragAblehnen = new JButton("Auftrag ablehnen");
 
@@ -106,7 +104,6 @@ public class GUI extends Component {
         buttonsAktion.setLayout(new GridLayout(0, 4));
 
         belohnung.add(lblBelohnung);
-        belohnung.add(btnBilanz);
 
         infos.add(lblProduktname);
         infos.add(lblAuftragsart);
@@ -126,7 +123,6 @@ public class GUI extends Component {
         //Eigenschaften
         lblBelohnung.setText("Belohnung: 0");
         belohnung.setBackground(Color.gray);
-        btnBilanz.setBackground(Color.gray);
         panel5.setBackground(Color.blue);
 
         panel5.setLayout(new BorderLayout());
@@ -235,7 +231,6 @@ public class GUI extends Component {
         btnAuftragBearbeiten.addActionListener(this::pressedBearbeiten);
         btnUmlagern.addActionListener(this::pressedUmlagern);
         btnVerschrotten.addActionListener(this::pressedVerschrotten);
-        btnBilanz.addActionListener(this::oeffneBilanz);
 
         frame.setSize(1000, 1000);
         frame.setVisible(true);
@@ -251,18 +246,6 @@ public class GUI extends Component {
             i = fach[ausgewaehltesFach];
             auftragsLabelRefresh();
         }
-    }
-
-    private  void oeffneBilanz(ActionEvent e) {
-        BilanzGUI gui = new BilanzGUI(aw.getKontoverlauf());
-        JDialog dialog = new JDialog(SwingUtilities.getWindowAncestor(this));
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialog.setSize(300, 400);
-        dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-        dialog.setContentPane(gui.getContent());
-        gui.inhalt();
-
-        dialog.setVisible(true);
     }
 
     private void pressedVerschrotten(ActionEvent e) {

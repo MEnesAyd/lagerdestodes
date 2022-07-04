@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea4a022c-a6b3-435e-8681-15cff8325de9" name="Changes" comment="Pimmel">
+    <list default="true" id="ea4a022c-a6b3-435e-8681-15cff8325de9" name="Changes" comment="Finished GUI design">
+      <change afterPath="$PROJECT_DIR$/src/ActionType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Coordinate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Start.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Leistungsnachweis.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Leistungsnachweis.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Abwicklung.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Lager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lagerswingbing.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/lagerswingbing.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lagerswingbing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lagerswingbing.java" afterDir="false" />
     </list>
@@ -15,6 +20,14 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -31,7 +44,9 @@
     <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="2BTHlIFM5V4f0WJUVgkqtlCdN2c" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -39,11 +54,13 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/admin/Desktop/Java-Projekt-Kudret&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\admin\IdeaProjects\lagerdestodes" />
       <recent name="C:\Users\admin\IdeaProjects\lagerdestodes\src" />
     </key>
   </component>
@@ -93,7 +110,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="cremeBranch" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>

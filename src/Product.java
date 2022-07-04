@@ -7,7 +7,7 @@ import java.util.List;
 public class Product {
     //Attributes
     private final String type;
-    private final String name;
+    private final String material;
     private final String valueA;
     private final String valueB;
     private final int reward;
@@ -16,8 +16,8 @@ public class Product {
     public String getType() {
         return type;
     }
-    public String getName() {
-        return name;
+    public String getMaterial() {
+        return material;
     }
     public int getReward() {
         return reward;
@@ -30,9 +30,9 @@ public class Product {
     }
 
     //Constructor
-    public Product(String type, String name, String attribute1, String attribute2, int reward) {
+    public Product(String type, String material, String attribute1, String attribute2, int reward) {
         this.type = type;
-        this.name = name;
+        this.material = material;
         this.valueA = attribute1;
         this.valueB = attribute2;
         this.reward = reward;

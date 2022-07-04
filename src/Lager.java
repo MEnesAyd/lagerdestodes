@@ -22,7 +22,7 @@ public class Lager {
         return isEmpty;
     }
     public String  getProduktName(int x, int y, int z) {
-        return Lager[x][y][z].getName();
+        return Lager[x][y][z].getMaterial();
     }
 
     public void insertProduct(int x, int y, int z, Product produkte) {
@@ -41,10 +41,10 @@ public class Lager {
 
 
     public Boolean foundProduct(Product searchElement, int i, int j, int k) {
-        if (Objects.equals(Lager[i][j][k].getName(), searchElement.getName()) && Objects.equals(Lager[i][j][k].getValueA(), searchElement.getValueA()) && Objects.equals(Lager[i][j][k].getValueB(), searchElement.getValueB())) {
+        if (Objects.equals(Lager[i][j][k].getMaterial(), searchElement.getMaterial()) && Objects.equals(Lager[i][j][k].getValueA(), searchElement.getValueA()) && Objects.equals(Lager[i][j][k].getValueB(), searchElement.getValueB())) {
             System.out.println("Auslagerung!");
             gefunden = true;
-            searchedName = Lager[i][j][k].getName();
+            searchedName = Lager[i][j][k].getMaterial();
         } else gefunden = false;
 
         return gefunden;

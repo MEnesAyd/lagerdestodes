@@ -1,12 +1,11 @@
 
 import javax.swing.*;
-import java.sql.Array;
 import java.util.*;
 import java.util.List;
 
 public class Abwicklung {
     private final Lager la;
-    private final List<Produkte> l;
+    private final List<Product> l;
     private int kontostand;
     private List<Kontoeintrag> kontoverlauf;
     private boolean einlagerungErfolgreich;
@@ -41,7 +40,7 @@ public class Abwicklung {
 
     public void naechsterEintrag(int i, int x, int y, int z) {
 
-        if (Objects.equals(l.get(i).getAuftragsart(), "Einlagerung")) {
+        if (Objects.equals(l.get(i).getType(), "Einlagerung")) {
 
             if (!la.isEmpty(x, y, z)) {
                 JOptionPane.showMessageDialog(null, "Einlagerung nicht möglich, da die Palette nicht leer ist", "Fehler: Einlagerung", JOptionPane.ERROR_MESSAGE);
@@ -59,7 +58,7 @@ public class Abwicklung {
             }
 
 
-        } else if (Objects.equals(l.get(i).getAuftragsart(), "Auslagerung")) {
+        } else if (Objects.equals(l.get(i).getType(), "Auslagerung")) {
 
             if (la.isEmpty(x, y, z)) {
                 JOptionPane.showMessageDialog(null, "Auslagerung nicht möglich, da die Palette leer ist", "Fehler: Auslagerung", JOptionPane.ERROR_MESSAGE);
@@ -99,7 +98,7 @@ public class Abwicklung {
         if (la.isEmpty(x, y, z)) {
             JOptionPane.showMessageDialog(null, "Prdoukt kann nicht verschrottet werden, da die Palette leer ist.", "Fehler: Verschrotten", JOptionPane.ERROR_MESSAGE);
         } else {
-            if (Objects.equals(la.getProduktName(x, y, z), "Holz") && Objects.equals(la.getProdukt(x, y, z).getAttribute2(), "Balken")) {
+            if (Objects.equals(la.getProduktName(x, y, z), "Holz") && Objects.equals(la.getProdukt(x, y, z).getValueB(), "Balken")) {
                 la.insertProduct(x, y, 1, null);
                 la.insertProduct(x, y, 0, null);
             } else {
@@ -112,7 +111,7 @@ public class Abwicklung {
     }
 
     public void loeschen(int x, int y, int z) {
-        if (Objects.equals(la.getProduktName(x, y, z), "Holz") && Objects.equals(la.getProdukt(x, y, z).getAttribute2(), "Balken")) {
+        if (Objects.equals(la.getProduktName(x, y, z), "Holz") && Objects.equals(la.getProdukt(x, y, z).getValueB(), "Balken")) {
             la.insertProduct(x, y, 1, null);
             la.insertProduct(x, y, 0, null);
         } else {
@@ -123,7 +122,7 @@ public class Abwicklung {
 
     //Einlagern/Auslagern der Produkte
     public void einlagernHolz(int i, int x, int y, int z) {
-        if (Objects.equals(l.get(i).getAttribute2(), "Balken")) {
+        if (Objects.equals(l.get(i).getValueB(), "Balken")) {
             if ((z == 0 && !la.isEmpty(x, y, 1) || (z == 1 && !la.isEmpty(x, y, 0)))) {
                 System.out.println("Einlagerung nicht möglich ");
                 einlagerungErfolgreich = false;
@@ -135,20 +134,20 @@ public class Abwicklung {
                 System.out.println("Einlagerung erfolgreich");
                 einlagerungErfolgreich = true;
                 auslagerungErfolgreich = false;
-                aendereKontostand(l.get(i).getBelohnung(), "Eingelagert");
+                aendereKontostand(l.get(i).getReward(), "Eingelagert");
             }
         } else {
             la.insertProduct(x, y, z, l.get(i));
             System.out.println("Einlagerung erfolgreich");
             einlagerungErfolgreich = true;
             auslagerungErfolgreich = false;
-            aendereKontostand(l.get(i).getBelohnung(), "Eingelagert");
+            aendereKontostand(l.get(i).getReward(), "Eingelagert");
         }
 
     }
 
     public void einlagernStein(int i, int x, int y, int z) {
-        if (Objects.equals(l.get(i).getAttribute2(), "Schwer")) {
+        if (Objects.equals(l.get(i).getValueB(), "Schwer")) {
             if (!la.isEmpty(x, 0, z) || (y != 0)) {
                 if (!la.isEmpty(x, 0, z)) {
                     JOptionPane.showMessageDialog(null, "Einlagerung nicht möglich, da der Stein zu schwer ist!", "Fehler: Einlagerung", JOptionPane.ERROR_MESSAGE);
@@ -164,10 +163,10 @@ public class Abwicklung {
                 System.out.println("Einlagerung erfolgreich");
                 einlagerungErfolgreich = true;
                 auslagerungErfolgreich = false;
-                aendereKontostand(l.get(i).getBelohnung(), "Eingelagert");
+                aendereKontostand(l.get(i).getReward(), "Eingelagert");
             }
 
-        } else if (Objects.equals(l.get(i).getAttribute2(), "Mittel")) {
+        } else if (Objects.equals(l.get(i).getValueB(), "Mittel")) {
             if ((y == 0 && !la.isEmpty(x, y, z)) || y == 1 && !la.isEmpty(x, y, z) || y == 2) {
                 if (y == 0 && !la.isEmpty(x, y, z)) {
                     JOptionPane.showMessageDialog(null, "Einlagerung nicht möglich, da die unteren Paletten besetzt sind", "Fehler: Einlagerung", JOptionPane.ERROR_MESSAGE);
@@ -185,15 +184,15 @@ public class Abwicklung {
                 System.out.println("Einlagerung erfolgreich");
                 einlagerungErfolgreich = true;
                 auslagerungErfolgreich = false;
-                aendereKontostand(l.get(i).getBelohnung(), "Eingelagert");
+                aendereKontostand(l.get(i).getReward(), "Eingelagert");
             }
 
-        } else if (Objects.equals(l.get(i).getAttribute2(), "Leicht")) {
+        } else if (Objects.equals(l.get(i).getValueB(), "Leicht")) {
             la.insertProduct(x, y, z, l.get(i));
             System.out.println("Einlagerung erfolgreich");
             einlagerungErfolgreich = true;
             auslagerungErfolgreich = false;
-            aendereKontostand(l.get(i).getBelohnung(), "Eingelagert");
+            aendereKontostand(l.get(i).getReward(), "Eingelagert");
         }
     }
 
@@ -202,24 +201,24 @@ public class Abwicklung {
         System.out.println("Einlagerung erfolgreich");
         einlagerungErfolgreich = true;
         auslagerungErfolgreich = false;
-        aendereKontostand(l.get(i).getBelohnung(), "Eingelagert");
+        aendereKontostand(l.get(i).getReward(), "Eingelagert");
     }
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     public void auslagernHolz(int i, int x, int y, int z) {
 
-        if (Objects.equals(l.get(i).getAttribute2(), "Balken")) {
+        if (Objects.equals(l.get(i).getValueB(), "Balken")) {
             if (z == 0) {
                 la.insertProduct(x, y, 1, null);
                 la.insertProduct(x, y, 0, null);
-                aendereKontostand(l.get(i).getBelohnung(), "Ausgelagert");
+                aendereKontostand(l.get(i).getReward(), "Ausgelagert");
                 System.out.println("Auslagern erfolgreich");
                 auslagerungErfolgreich = true;
                 einlagerungErfolgreich = false;
             } else if (z == 1) {
                 la.insertProduct(x, y, 1, null);
                 la.insertProduct(x, y, 0, null);
-                aendereKontostand(l.get(i).getBelohnung(), "Ausgelagert");
+                aendereKontostand(l.get(i).getReward(), "Ausgelagert");
                 System.out.println("Auslagern erfolgreich");
                 auslagerungErfolgreich = true;
                 einlagerungErfolgreich = false;
@@ -233,7 +232,7 @@ public class Abwicklung {
         if (z == 1) {
             if (la.isEmpty(x, y, 0)) {
                 la.insertProduct(x, y, z, null);
-                aendereKontostand(l.get(i).getBelohnung(), "Ausgelagert");
+                aendereKontostand(l.get(i).getReward(), "Ausgelagert");
                 System.out.println("Auslagern erfolgreich");
                 auslagerungErfolgreich = true;
                 einlagerungErfolgreich = false;
@@ -244,7 +243,7 @@ public class Abwicklung {
 
         } else {
             la.insertProduct(x, y, z, null);
-            aendereKontostand(l.get(i).getBelohnung(), "Ausgelagert");
+            aendereKontostand(l.get(i).getReward(), "Ausgelagert");
             System.out.println("Auslagern erfolgreich");
             auslagerungErfolgreich = true;
             einlagerungErfolgreich = false;
@@ -287,28 +286,28 @@ public class Abwicklung {
             }
             //Aktuelles Produkt Stein
             else if(Objects.equals(la.getProdukt(x, y, z).getName(), "Stein")){
-                if(Objects.equals(la.getProdukt(x,y,z).getAttribute2(),"Schwer")){
+                if(Objects.equals(la.getProdukt(x,y,z).getValueB(),"Schwer")){
                     if(zY!=0){
                         //Stein zu schwer
                         JOptionPane.showMessageDialog(null, "Stein zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
                     }else{
                         EinzelproduktZuLeer(x,y,z,zX,zY,zZ);
                     }
-                }else if(Objects.equals(la.getProdukt(x,y,z).getAttribute2(),"Mittel")){
+                }else if(Objects.equals(la.getProdukt(x,y,z).getValueB(),"Mittel")){
                     if(zY==2){
                         //Stein zu schwer
                         JOptionPane.showMessageDialog(null, "Stein zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
                     }else{
                         EinzelproduktZuLeer(x,y,z,zX,zY,zZ);
                     }
-                }else if(Objects.equals(la.getProdukt(x,y,z).getAttribute2(),"Leicht")){
+                }else if(Objects.equals(la.getProdukt(x,y,z).getValueB(),"Leicht")){
                     EinzelproduktZuLeer(x,y,z,zX,zY,zZ);
                 }
             }
             //Aktuelles Produkt Holz
             else if(Objects.equals(la.getProdukt(x, y, z).getName(), "Holz")){
                 //Aktuelles Produkt kein Balken
-                if(!Objects.equals(la.getProdukt(x,y,z).getAttribute2(),"Balken")){
+                if(!Objects.equals(la.getProdukt(x,y,z).getValueB(),"Balken")){
                     EinzelproduktZuLeer(x,y,z,zX,zY,zZ);
                 }
                 //Aktuelles Balken
@@ -341,14 +340,14 @@ public class Abwicklung {
 
         //Zielprodukt Stein
         else if (Objects.equals(la.getProdukt(zX, zY, zZ).getName(), "Stein")) {
-            if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Schwer")) {
+            if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Schwer")) {
                 if (y != 0) {
                     JOptionPane.showMessageDialog(null, "Stein zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
                     umlagernErfolgreich = false;
                 } else {
                     zielProduktStein(x, y, z, zX, zY, zZ);
                 }
-            } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Mittel")) {
+            } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Mittel")) {
                 if (y == 2) {
                     //Stein zu schwer
                     JOptionPane.showMessageDialog(null, "Stein zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
@@ -357,7 +356,7 @@ public class Abwicklung {
                 } else {
                     zielProduktStein(x, y, z, zX, zY, zZ);
                 }
-            } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Leicht")) {
+            } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Leicht")) {
                 zielProduktStein(x, y, z, zX, zY, zZ);
             }
         }
@@ -373,21 +372,21 @@ public class Abwicklung {
 
 
     public void aktProduktHolz(int x, int y, int z, int zX, int zY, int zZ) {
-        if (!Objects.equals(la.getProdukt(x, y, z).getAttribute2(), "Balken")) {
+        if (!Objects.equals(la.getProdukt(x, y, z).getValueB(), "Balken")) {
             //Ziel Papier
             if (Objects.equals(la.getProdukt(zX, zY, zZ).getName(), "Papier")) {
                 zielproduktPapier(x, y, z, zX, zY, zZ);
             }
             //Ziel Stein
             else if (Objects.equals(la.getProdukt(zX, zY, zZ).getName(), "Stein")) {
-                if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Schwer")) {
+                if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Schwer")) {
                     if (y != 0) {
                         JOptionPane.showMessageDialog(null, "Stein zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
                         umlagernErfolgreich = false;
                     } else {
                         zielProduktStein(x, y, z, zX, zY, zZ);
                     }
-                } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Mittel")) {
+                } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Mittel")) {
                     if (y == 2) {
                         JOptionPane.showMessageDialog(null, "Stein zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
                         umlagernErfolgreich = false;
@@ -395,7 +394,7 @@ public class Abwicklung {
                         zielProduktStein(x, y, z, zX, zY, zZ);
                     }
 
-                } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Leicht")) {
+                } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Leicht")) {
                     zielProduktStein(x, y, z, zX, zY, zZ);
                 }
 
@@ -411,14 +410,14 @@ public class Abwicklung {
             }
             //Ziel Stein
             else if (Objects.equals(la.getProdukt(zX, zY, zZ).getName(), "Stein")) {
-                if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Schwer")) {
+                if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Schwer")) {
                     if (y != 0) {
                         JOptionPane.showMessageDialog(null, "Stein zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
                         umlagernErfolgreich = false;
                     } else {
                         balkenZuEinfachenProdukt(x, y, z, zX, zY, zZ);
                     }
-                } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Mittel")) {
+                } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Mittel")) {
                     if (y == 2) {
                         JOptionPane.showMessageDialog(null, "Stein zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
                         umlagernErfolgreich = false;
@@ -426,7 +425,7 @@ public class Abwicklung {
                         balkenZuEinfachenProdukt(x, y, z, zX, zY, zZ);
                     }
 
-                } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Leicht")) {
+                } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Leicht")) {
                     balkenZuEinfachenProdukt(x, y, z, zX, zY, zZ);
                 }
 
@@ -442,21 +441,21 @@ public class Abwicklung {
     public void aktProduktStein(int x, int y, int z, int zX, int zY, int zZ) {
         //Zielprodukt Papier
         if (Objects.equals(la.getProdukt(zX, zY, zZ).getName(), "Papier")) {
-            if (Objects.equals(la.getProdukt(x, y, z).getAttribute2(), "Schwer")) {
+            if (Objects.equals(la.getProdukt(x, y, z).getValueB(), "Schwer")) {
                 if (zY != 0) {
                     JOptionPane.showMessageDialog(null, "Stein zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
                     umlagernErfolgreich = false;
                 } else {
                     zielproduktPapier(x, y, z, zX, zY, zZ);
                 }
-            } else if (Objects.equals(la.getProdukt(x, y, z).getAttribute2(), "Mittel")) {
+            } else if (Objects.equals(la.getProdukt(x, y, z).getValueB(), "Mittel")) {
                 if (zY == 2) {
                     JOptionPane.showMessageDialog(null, "Stein zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
                     umlagernErfolgreich = false;
                 } else {
                     zielproduktPapier(x, y, z, zX, zY, zZ);
                 }
-            } else if (Objects.equals(la.getProdukt(x, y, z).getAttribute2(), "Leicht")) {
+            } else if (Objects.equals(la.getProdukt(x, y, z).getValueB(), "Leicht")) {
                 zielproduktPapier(x, y, z, zX, zY, zZ);
             }
         }
@@ -465,7 +464,7 @@ public class Abwicklung {
         //Zielprodukt Stein
         else if (Objects.equals(la.getProdukt(zX, zY, zZ).getName(), "Stein")) {
             if (Objects.equals(la.getProdukt(zX, zY, zZ).getName(), "Stein")) {
-                if (Objects.equals(la.getProdukt(x, y, z).getAttribute2(), "Schwer")) {
+                if (Objects.equals(la.getProdukt(x, y, z).getValueB(), "Schwer")) {
                     if (zY != 0) {
                         //Der Stein ist viel zu schwer für eine höhere Ebene
                         JOptionPane.showMessageDialog(null, "Produkt zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
@@ -473,7 +472,7 @@ public class Abwicklung {
                     } else {
                         zielProduktStein(x, y, z, zX, zY, zZ);
                     }
-                } else if (Objects.equals(la.getProdukt(x, y, z).getAttribute2(), "Mittel")) {
+                } else if (Objects.equals(la.getProdukt(x, y, z).getValueB(), "Mittel")) {
                     if (zY == 2) {
                         //Der Stein ist viel zu schwer für eine höhere Ebene
                         JOptionPane.showMessageDialog(null, "Produkt zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
@@ -482,7 +481,7 @@ public class Abwicklung {
                         zielProduktStein(x, y, z, zX, zY, zZ);
                     }
                 } else {
-                    if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Schwer")) {
+                    if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Schwer")) {
                         if (y != 0) {
                             //Fehler
                             JOptionPane.showMessageDialog(null, "Produkt zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
@@ -490,7 +489,7 @@ public class Abwicklung {
                         } else {
                             zielProduktStein(x, y, z, zX, zY, zZ);
                         }
-                    } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Mittel")) {
+                    } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Mittel")) {
                         if (y == 2) {
                             //Fehler
                             JOptionPane.showMessageDialog(null, "Produkt zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
@@ -509,7 +508,7 @@ public class Abwicklung {
 
         //Zielprodukt Holz
         else if (Objects.equals(la.getProdukt(zX, zY, zZ).getName(), "Holz")) {
-            if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Schwer")) {
+            if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Schwer")) {
                 if (y != 0) {
                     //Fehler
                     JOptionPane.showMessageDialog(null, "Produkt zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
@@ -517,7 +516,7 @@ public class Abwicklung {
                 } else {
                     zielProduktHolz(x, y, z, zX, zY, zZ);
                 }
-            } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Mittel")) {
+            } else if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Mittel")) {
                 if (y == 2) {
                     //Fehler
                     JOptionPane.showMessageDialog(null, "Produkt zu schwer", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);
@@ -705,7 +704,7 @@ public class Abwicklung {
     }
 
     public void zielProduktHolz(int x, int y, int z, int zX, int zY, int zZ) {
-        if (Objects.equals(la.getProdukt(zX, zY, zZ).getAttribute2(), "Balken")) {
+        if (Objects.equals(la.getProdukt(zX, zY, zZ).getValueB(), "Balken")) {
             if (z == 0 && zZ == 0) {
                 if (!la.isEmpty(x, y, 1)) {
                     JOptionPane.showMessageDialog(null, "Hinter dem Zielprodukt ist ein anderes Produkt und Balken braucht zwei Paletten platz", "Fehler: Umlagerung", JOptionPane.ERROR_MESSAGE);

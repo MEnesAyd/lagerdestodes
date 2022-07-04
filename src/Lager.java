@@ -1,8 +1,5 @@
 
 
-import javax.swing.text.LayeredHighlighter;
-import java.awt.color.ProfileDataException;
-import java.io.ObjectStreamException;
 import java.util.Objects;
 
 public class Lager {
@@ -12,7 +9,7 @@ public class Lager {
     private int z = 2;
     private Boolean isEmpty = true;
     private int anzPaletten = x * y * z;
-    private Produkte Lager[][][] = new Produkte[x][y][z];
+    private Product Lager[][][] = new Product[x][y][z];
     private String searchedName;
     Boolean gefunden = false;
 
@@ -28,11 +25,11 @@ public class Lager {
         return Lager[x][y][z].getName();
     }
 
-    public void insertProduct(int x, int y, int z, Produkte produkte) {
+    public void insertProduct(int x, int y, int z, Product produkte) {
         Lager[x][y][z] = produkte;
     }
 
-    public Produkte getProdukt(int x, int y, int z) {
+    public Product getProdukt(int x, int y, int z) {
         return Lager[x][y][z];
     }
 
@@ -43,8 +40,8 @@ public class Lager {
     }
 
 
-    public Boolean foundProduct(Produkte searchElement, int i, int j, int k) {
-        if (Objects.equals(Lager[i][j][k].getName(), searchElement.getName()) && Objects.equals(Lager[i][j][k].getAttribute1(), searchElement.getAttribute1()) && Objects.equals(Lager[i][j][k].getAttribute2(), searchElement.getAttribute2())) {
+    public Boolean foundProduct(Product searchElement, int i, int j, int k) {
+        if (Objects.equals(Lager[i][j][k].getName(), searchElement.getName()) && Objects.equals(Lager[i][j][k].getValueA(), searchElement.getValueA()) && Objects.equals(Lager[i][j][k].getValueB(), searchElement.getValueB())) {
             System.out.println("Auslagerung!");
             gefunden = true;
             searchedName = Lager[i][j][k].getName();

@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea4a022c-a6b3-435e-8681-15cff8325de9" name="Changes" comment="Refactored Product.java">
+    <list default="true" id="ea4a022c-a6b3-435e-8681-15cff8325de9" name="Changes" comment="Pimmel">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Abwicklung.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Abwicklung.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Kontoeintrag.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Start.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lagerswingbing.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/lagerswingbing.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lagerswingbing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lagerswingbing.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

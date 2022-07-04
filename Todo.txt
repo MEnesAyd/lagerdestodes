@@ -1,0 +1,5 @@
+1. Gui
+2. Alle Name verändern
+3. Kommentare verändern
+4. Dateistruktur verändern
+5. Logik von Denis ei

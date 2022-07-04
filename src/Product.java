@@ -56,4 +56,8 @@ public class Product {
 
         return ret;
     }
+
+    public boolean compareToProduct(Product p) {
+        return material.equals(p.material)  && valueA.equals(p.valueA) && valueB.equals(p.valueB);
+    }
 }

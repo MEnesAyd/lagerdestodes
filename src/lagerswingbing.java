@@ -41,6 +41,7 @@ public class lagerswingbing {
     private JLabel lblVal;
     private JLabel lblTask;
     private JComboBox slotSelect;
+    private JLabel lblBalance;
 
 
     //Application data
@@ -50,6 +51,8 @@ public class lagerswingbing {
     private int[] productListSlots;
     private int nextProductInList = -1;
     private ActionType actionType = ActionType.NONE;
+    private  Product productBuffer;
+    private int balance;
 
     //Constructor
     public lagerswingbing() {
@@ -83,6 +86,8 @@ public class lagerswingbing {
     }
 
     private void nextTask(ActionEvent e) {
+        //Check if current task is declined
+        if (productListSlots[getSlot()] > -1) balance -= productList.get(productListSlots[getSlot()]).getReward();
         productListSlots[getSlot()] = nextProductInList = (nextProductInList + 1) % productList.size();
         refreshGUI();
     }
@@ -91,17 +96,40 @@ public class lagerswingbing {
 
     private void matrixButtonPressed(ActionEvent e) {
         var coord = getCoordinateFromButton((JButton)e.getSource());
+        Product obj;
         switch(actionType) {
             case STORE:
                 if (storageMatrix[coord.x][coord.y][coord.z] != null) break;
-                storageMatrix[coord.x][coord.y][coord.z] = productList.get(productListSlots[getSlot()]);
+                obj = storageMatrix[coord.x][coord.y][coord.z] = productList.get(productListSlots[getSlot()]);
                 productListSlots[getSlot()] = -1;
+                balance += obj.getReward();
                 actionType = ActionType.NONE;
                 break;
             case DESTROY:
                 if (storageMatrix[coord.x][coord.y][coord.z] == null) break;
                 storageMatrix[coord.x][coord.y][coord.z] = null;
+                balance -= 300;
                 actionType = ActionType.NONE;
+                break;
+            case RESTORE_SRC:
+                if (storageMatrix[coord.x][coord.y][coord.z] == null) break;
+                productBuffer = storageMatrix[coord.x][coord.y][coord.z];
+                storageMatrix[coord.x][coord.y][coord.z] = null;
+                actionType = ActionType.RESTORE_DEST;
+                break;
+            case RESTORE_DEST:
+                if (storageMatrix[coord.x][coord.y][coord.z] != null) break;
+                storageMatrix[coord.x][coord.y][coord.z] = productBuffer;
+                productBuffer = null;
+                balance -= 100;
+                actionType = ActionType.NONE;
+                break;
+            case OUTSOURCE:
+                obj = storageMatrix[coord.x][coord.y][coord.z];
+                storageMatrix[coord.x][coord.y][coord.z] = null;
+                balance += obj.getReward();
+                actionType = ActionType.NONE;
+                break;
         }
 
         refreshGUI();
@@ -145,6 +173,7 @@ public class lagerswingbing {
                 {
                     var item = storageMatrix[x][y][z];
                     buttonMatrix[x][y][z].setText(item != null ? item.getMaterial() + ", " + item.getValueA() + ", " + item.getValueB() : " ");
+                    if (actionType == ActionType.OUTSOURCE && prod != null) buttonMatrix[x][y][z].setEnabled(item != null && prod.compareToProduct(item)); else buttonMatrix[x][y][z].setEnabled(true);
                 }
 
         //Enable/Disable buttons
@@ -168,6 +197,7 @@ public class lagerswingbing {
         lblAttrB.setText(prod == null ? "" : prod.getValueB());
         lblVal.setText(prod == null ? "" : prod.getReward() + "€");
         lblTask.setText(prod == null ? "" : prod.getType());
+        lblBalance.setText(balance + "€");
     }
 
     //Getter
@@ -175,7 +205,6 @@ public class lagerswingbing {
 
     public Coordinate getCoordinateFromButton(JButton b) {
         var txt = b.getName();
-        var lol = Character.toString(txt.charAt(3));
         return new Coordinate(Integer.parseInt(Character.toString(txt.charAt(3))) - 1, Integer.parseInt(Character.toString(txt.charAt(4))) - 1, txt.charAt(5) == 'A' ? 0 : 1);
     }
 

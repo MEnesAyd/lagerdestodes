@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea4a022c-a6b3-435e-8681-15cff8325de9" name="Changes" comment="Fuck it, kein Bock mehr(für heute)">
+    <list default="true" id="ea4a022c-a6b3-435e-8681-15cff8325de9" name="Changes" comment="Implemented special rules for in/output">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lagerswingbing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lagerswingbing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ActionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ActionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Coordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Coordinate.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +110,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656944657569</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Implemented special rules for in/output">
+      <created>1657005497927</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1657005497928</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -141,6 +149,7 @@
     <MESSAGE value="Did many things" />
     <MESSAGE value="Completed main functions" />
     <MESSAGE value="Fuck it, kein Bock mehr(für heute)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fuck it, kein Bock mehr(für heute)" />
+    <MESSAGE value="Implemented special rules for in/output" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented special rules for in/output" />
   </component>
 </project>

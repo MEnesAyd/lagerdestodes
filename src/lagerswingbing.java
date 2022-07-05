@@ -97,40 +97,58 @@ public class lagerswingbing {
         Product obj;
         switch(actionType) {
             case STORE:
-                if (storageMatrix[coord.x][coord.y][coord.z] != null) break;
-                obj = storageMatrix[coord.x][coord.y][coord.z] = productList.get(productListSlots[getSlot()]);
+                obj = productList.get(productListSlots[getSlot()]);
+                if (!isStoreValid(obj, coord)) break;
+                storageMatrix[coord.x][coord.y][coord.z] = obj;
                 productListSlots[getSlot()] = -1;
                 balance += obj.getReward();
                 actionType = ActionType.NONE;
                 break;
             case DESTROY:
-                if (storageMatrix[coord.x][coord.y][coord.z] == null) break;
+                if (!isOutsourceValid(coord)) break;
                 storageMatrix[coord.x][coord.y][coord.z] = null;
                 balance -= 300;
                 actionType = ActionType.NONE;
                 break;
             case RESTORE_SRC:
-                if (storageMatrix[coord.x][coord.y][coord.z] == null) break;
+                if (!isOutsourceValid(coord)) break;
                 productBuffer = storageMatrix[coord.x][coord.y][coord.z];
                 storageMatrix[coord.x][coord.y][coord.z] = null;
                 actionType = ActionType.RESTORE_DEST;
                 break;
             case RESTORE_DEST:
-                if (storageMatrix[coord.x][coord.y][coord.z] != null) break;
+                if (!isStoreValid(productBuffer, coord)) break;
                 storageMatrix[coord.x][coord.y][coord.z] = productBuffer;
                 productBuffer = null;
                 balance -= 100;
                 actionType = ActionType.NONE;
                 break;
             case OUTSOURCE:
+                if (!isOutsourceValid(coord)) break;
                 obj = storageMatrix[coord.x][coord.y][coord.z];
                 storageMatrix[coord.x][coord.y][coord.z] = null;
+                productListSlots[getSlot()] = -1;
                 balance += obj.getReward();
                 actionType = ActionType.NONE;
                 break;
         }
 
         refreshGUI();
+    }
+
+    private boolean isStoreValid(Product p, Coordinate c) {
+        var neighbour = storageMatrix[c.x][c.y][1 - c.z]; //The product next to our destination
+        if (storageMatrix[c.x][c.y][c.z] != null) return false; //Is space already covered
+        if (c.z == 1 && storageMatrix[c.x][c.y][0] != null) return false; //Is access blocked
+        if (neighbour != null && (neighbour.getValueB().equals("beams") || p.getValueB().equals("beams"))) return false; //Neighbour blocks space because it's too big
+        if (c.y > 0 && p.getValueB().equals("heavy") ||  c.y > 1 && p.getValueB().equals("medium")) return false; //Product is too heavy for desired level
+        return true; //Everything is a-ok
+    }
+
+    private boolean isOutsourceValid(Coordinate c) {
+        if (storageMatrix[c.x][c.y][c.z] == null) return false; //Is space already empty
+        if (c.z == 1 && storageMatrix[c.x][c.y][0] != null) return false; //Is access blocked
+        return true;
     }
 
     private void storeButtonPressed(ActionEvent e) {
